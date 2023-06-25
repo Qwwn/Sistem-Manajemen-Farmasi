@@ -90,7 +90,7 @@ public class viewuser extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 72, 806, 290));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 72, 806, 270));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Click on row to delete user");
@@ -138,17 +138,8 @@ public class viewuser extends javax.swing.JFrame {
                     PreparedStatement ps = con.prepareStatement("delete from appuser where appuser_pk=?");
                     ps.setString(1, id);
                     ps.executeUpdate();
-
-// Reorder the ID values
-                    PreparedStatement resetPs = con.prepareStatement("SET @count = 0");
+                    PreparedStatement resetPs = con.prepareStatement("ALTER TABLE appuser AUTO_INCREMENT = 1");
                     resetPs.executeUpdate();
-
-                    PreparedStatement updatePs = con.prepareStatement("UPDATE appuser SET appuser_pk = @count:= @count + 1");
-                    updatePs.executeUpdate();
-
-                    // Reset the auto-increment counter
-                    PreparedStatement alterPs = con.prepareStatement("ALTER TABLE appuser AUTO_INCREMENT = 1");
-                    alterPs.executeUpdate();
                     JOptionPane.showMessageDialog(null, "User successfully deleted");
                     setVisible(false);
                     new viewuser(username).setVisible(true);
