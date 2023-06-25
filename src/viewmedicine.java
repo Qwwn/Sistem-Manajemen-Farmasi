@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import dao.ConnectionProvider;
 import java.sql.Statement;
-
+import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -18,20 +18,13 @@ import javax.swing.table.TableModel;
  *
  * @author Admin
  */
-public class viewuser extends javax.swing.JFrame {
-
-    private String username = "";
+public class viewmedicine extends javax.swing.JFrame {
 
     /**
-     * Creates new form viewuser
+     * Creates new form viewmedicine
      */
-    public viewuser() {
+    public viewmedicine() {
         initComponents();
-    }
-
-    public viewuser(String tempUsername) {
-        initComponents();
-        username = tempUsername;
         setLocationRelativeTo(null);
     }
 
@@ -62,25 +55,25 @@ public class viewuser extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setText("View User");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 0, -1, -1));
+        jLabel1.setText("View Medicine");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 0, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/close.png"))); // NOI18N
+        jButton1.setToolTipText("");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 0, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(798, 6, -1, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 850, 10));
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Name", "Role", "DOB", "Mobile Numberail", "Email", "Username", "Password", "Address"
+                "ID", "Medicine ID", "Name", "Company Name", "Quantity", "Price"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -90,11 +83,11 @@ public class viewuser extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 72, 806, 290));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 66, 784, 259));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Click on row to delete user");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 460, -1, -1));
+        jLabel2.setText("Click on row to delete medicine");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 460, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/all_pages_background.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -102,61 +95,59 @@ public class viewuser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         try {
             Connection con = ConnectionProvider.getCon();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from appuser");
+            ResultSet rs = st.executeQuery("select *from medicine");
             while (rs.next()) {
-                model.addRow(new Object[]{rs.getString("appuser_pk"), rs.getString("name"), rs.getString("userRole"), rs.getString("dob"), rs.getString("mobileNumber"), rs.getString("email"), rs.getString("username"), rs.getString("password"), rs.getString("address")});
+                model.addRow(new Object[]{rs.getString("medicine_pk"), rs.getString("uniqueid"), rs.getString("name"), rs.getString("companyName"), rs.getString("quantity"), rs.getString("price")});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-    }//GEN-LAST:event_formComponentShown
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_formComponentShown
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int index = jTable1.getSelectedRow();
-        TableModel model = jTable1.getModel();
-        String id = model.getValueAt(index, 0) != null ? model.getValueAt(index, 0).toString() : "";
-        String usernameTable = model.getValueAt(index, 6) != null ? model.getValueAt(index, 6).toString() : "";
-        if (username.equals(usernameTable)) {
-            JOptionPane.showMessageDialog(null, "You can't delete your own account");
-        } else {
-            int a = JOptionPane.showConfirmDialog(null, "Do you want to delete this user", "select", JOptionPane.YES_NO_CANCEL_OPTION);
-            if (a == 0) {
-                try {
-                    Connection con = ConnectionProvider.getCon();
-                    PreparedStatement ps = con.prepareStatement("delete from appuser where appuser_pk=?");
-                    ps.setString(1, id);
-                    ps.executeUpdate();
+    TableModel model = jTable1.getModel();
+    String id = model.getValueAt(index, 0).toString();
 
-// Reorder the ID values
-                    PreparedStatement resetPs = con.prepareStatement("SET @count = 0");
-                    resetPs.executeUpdate();
+    int a = JOptionPane.showConfirmDialog(null, "Do you want to delete this medicine?", "Select", JOptionPane.YES_NO_OPTION);
+    if (a == 0) {
+        try {
+            Connection con = ConnectionProvider.getCon();
+            PreparedStatement ps = con.prepareStatement("DELETE FROM medicine WHERE medicine_pk=?");
+            ps.setString(1, id);
+            ps.executeUpdate();
 
-                    PreparedStatement updatePs = con.prepareStatement("UPDATE appuser SET appuser_pk = @count:= @count + 1");
-                    updatePs.executeUpdate();
+            // Reorder the ID values
+            PreparedStatement resetPs = con.prepareStatement("SET @count = 0");
+            resetPs.executeUpdate();
 
-                    // Reset the auto-increment counter
-                    PreparedStatement alterPs = con.prepareStatement("ALTER TABLE appuser AUTO_INCREMENT = 1");
-                    alterPs.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "User successfully deleted");
-                    setVisible(false);
-                    new viewuser(username).setVisible(true);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
-                }
-            }
+            PreparedStatement updatePs = con.prepareStatement("UPDATE medicine SET medicine_pk = @count:= @count + 1");
+            updatePs.executeUpdate();
+
+            // Reset the auto-increment counter
+            PreparedStatement alterPs = con.prepareStatement("ALTER TABLE medicine AUTO_INCREMENT = 1");
+            alterPs.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Medicine successfully deleted");
+            setVisible(false);
+            new viewmedicine().setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
+    }
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**
@@ -176,20 +167,20 @@ public class viewuser extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(viewuser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(viewmedicine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(viewuser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(viewmedicine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(viewuser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(viewmedicine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(viewuser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(viewmedicine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new viewuser().setVisible(true);
+                new viewmedicine().setVisible(true);
             }
         });
     }
