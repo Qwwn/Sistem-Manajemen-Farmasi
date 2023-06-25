@@ -107,6 +107,11 @@ public class admindashboard extends javax.swing.JFrame {
         jButton8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/profile.png"))); // NOI18N
         jButton8.setText("Profile");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 170, 400, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/adminDashboardBackground.png"))); // NOI18N
@@ -146,6 +151,11 @@ public class admindashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new updateuser().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        new profile(username).setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
