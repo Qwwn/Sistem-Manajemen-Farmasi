@@ -116,7 +116,7 @@ public class masuk extends javax.swing.JFrame {
                     new admindashboard(username).setVisible(true);
                 } else {
                     setVisible(false);
-                    new pharmacistdashboard().setVisible(true);
+                    new pharmacistdashboard(username).setVisible(true);
                 }
             }
 
