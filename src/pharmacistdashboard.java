@@ -87,6 +87,11 @@ public class pharmacistdashboard extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/update.png"))); // NOI18N
         jButton6.setText("Update Medicine");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, 400, -1));
 
         jButton7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -156,6 +161,11 @@ public class pharmacistdashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new viewmedicine().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        new updatemedicine().setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
